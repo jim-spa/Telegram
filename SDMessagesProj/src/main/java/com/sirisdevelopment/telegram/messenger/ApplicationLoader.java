@@ -25,11 +25,16 @@ import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.PowerManager;
+import android.os.RemoteException;
 import android.util.Base64;
+import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import com.sdmmllc.superdupermm.SDSmsReceiveCallback;
+import com.sdmmllc.superdupersmsmanager.sdk.SDSmsConsts;
+import com.sdmmllc.superdupersmsmanager.sdk.SDSmsManager;
 import com.sirisdevelopment.telegram.tgnet.ConnectionsManager;
 import com.sirisdevelopment.telegram.tgnet.SerializedData;
 import com.sirisdevelopment.telegram.tgnet.TLRPC;
@@ -47,6 +52,7 @@ public class ApplicationLoader extends Application {
 
     private static int serviceMessageColor;
     private static int serviceSelectedMessageColor;
+    protected static SDSmsManager mSdmmsManager;
 
     public static volatile Context applicationContext;
     public static volatile Handler applicationHandler;
@@ -304,6 +310,47 @@ public class ApplicationLoader extends Application {
 
         startPushService();
     }
+
+    private void initSdmm() {
+        if (mSdmmsManager == null) {
+            if (SDSmsConsts.DEBUG_RECEIVE_SMS) FileLog.d("tmessages", " mSdmmsManager is null, loading for package: " +
+                    applicationContext.getApplicationContext().getPackageName());
+            mSdmmsManager = SDSmsManager.getDefault(applicationContext.getApplicationContext(),
+                    applicationContext.getString(R.string.SDSMS_ID),
+                    SDSmsManager.ACCESS_TYPE_MESSAGING,
+                    getString(R.string.smsSendReceiver),
+                    getString(R.string.smsReceiveReceiver));
+            mSdmmsManager.setReceiverCallback(mCallback);
+        }
+    }
+
+    private static SDSmsReceiveCallback mCallback = new SDSmsReceiveCallback() {
+
+        @Override
+        public boolean onReceive(Intent intent) throws RemoteException {
+            // TODO
+            // This needs to be identified
+/*
+            PrivilegedSmsReceiver receiver = new PrivilegedSmsReceiver();
+            receiver.onReceive(mContext, intent);
+*/
+            if (SDSmsConsts.DEBUG_RECEIVE_SMS)
+                Log.i("tmessages", "KitKat test success! message received...");
+            return true;
+        }
+
+        @Override
+        public String testCallbackConnection(String text) {
+            if (SDSmsConsts.DEBUG_RECEIVE_SMS) Log.i("tmessages", "custom callback on SDMM SDK for " +
+                    applicationContext.getPackageName() + " successful; testConnection text:" + text);
+            return "Connection successful for " + "tmessages";
+        }
+
+        @Override
+        public boolean reload() {
+            return false;
+        }
+    };
 
     public static void startPushService() {
         SharedPreferences preferences = applicationContext.getSharedPreferences("Notifications", MODE_PRIVATE);

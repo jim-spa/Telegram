@@ -3,6 +3,10 @@
 
 
 <resources>
+    <string name="SDSMS_ID">com.sirisdevelopment.telegram.messenger</string>
+    <string name="smsSendReceiver">me.gotxt.app</string>
+    <string name="smsReceiveReceiver">PrivilegedSmsReceiver</string>
+
     <string name="AppName">Super Duper Telegram</string>
     <string name="AppNameBeta">Super Duper Telegram Beta</string>
     <string name="LanguageName">English</string>

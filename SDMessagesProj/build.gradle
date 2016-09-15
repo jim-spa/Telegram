@@ -2,9 +2,13 @@ apply plugin: 'com.android.application'
 
 repositories {
     mavenCentral()
+    flatDir {
+        dirs '../../libs/sdmm_sdk/1.1.1', '../../mopub-sdk/libs'
+    }
 }
 
 dependencies {
+    compile(name: 'SDMM_SDK-release', ext: 'aar')
     compile 'com.android.support:support-v4:24.0.0-alpha2'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.google.android.gms:play-services-maps:8.4.0'
@@ -113,7 +117,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 9
+        minSdkVersion 14
         targetSdkVersion 23
         versionName "3.8.1"
     }
