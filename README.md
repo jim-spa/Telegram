@@ -1,9 +1,11 @@
 ## Telegram messenger for Android
 
-[Telegram](https://telegram.org) is a messaging app with a focus on speed and security. It’s superfast, simple and free.
-This repo contains the official source code for [Telegram App for Android](https://play.google.com/store/apps/details?id=org.telegram.messenger).
+[Super Duper Telegram](https://www.sdmmllc.com) is a messaging app with a focus on speed and security. It’s superfast, simple and free.
+This repo contains the official source code for [Super Duper Telegram App for Android](https://play.google.com/store/apps/details?id=com.sirisdevelopment.telegram.messenger).
 
-##Creating your Telegram Application
+##Creating your Super Duper Telegram Application
+
+Telegram provides the messaging service that we rely upon. We have extended the Telegram app to provide features that the original Super Duper Messaging Manager provides to other app developers.
 
 We welcome all developers to use our API and source code to create applications on our platform.
 There are several things we require from **all developers** for the moment.
@@ -24,7 +26,7 @@ MTproto protocol manuals: https://core.telegram.org/mtproto
 
 **Beware of using the dev branch and uploading it to any markets, in many cases it not will work as expected**.
 
-First of all, take a look at **src/main/java/org/telegram/messenger/BuildVars.java** and fill it with correct values.
+First of all, take a look at **src/main/java/com/sirisdevelopment/telegram/messenger/BuildVars.java** and fill it with correct values.
 Import the root folder into your IDE (tested on Android Studio), then run project.
 
 ### Localization
