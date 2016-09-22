@@ -7,4 +7,3 @@ local.properties
 *.keystore
 gradle.properties
 
-SDMessagesProj/src/main/java/com/sirisdevelopment/telegram/messenger/BuildVars.java
