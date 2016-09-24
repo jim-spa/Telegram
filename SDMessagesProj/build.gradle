@@ -68,7 +68,12 @@ android {
         }
     }
 
-    defaultConfig.versionCode = 821
+    defaultConfig {
+        versionCode = 821
+        ndk {
+            moduleName "YourModuleName"
+        }
+    }
 
     sourceSets.main {
         jniLibs.srcDir 'libs'
@@ -85,6 +90,33 @@ android {
 
     sourceSets.foss {
         manifest.srcFile 'config/foss/AndroidManifest.xml'
+    }
+
+    sourceSets.main {
+        jni.srcDirs = [] // This prevents the auto generation of Android.mk
+        jniLibs.srcDir 'jniLibs' // This is necessary for precompiled libraries
+    }
+
+    task buildNative(type: Exec, description: 'Compile JNI source via NDK') {
+        def ndkDir = android.ndkDirectory
+        commandLine "$ndkDir/ndk-build",
+                '-C', file('jni').absolutePath, // relative path to jni source
+                '-j', Runtime.runtime.availableProcessors(),
+                'all',
+                'NDK_DEBUG=1'
+    }
+
+    task cleanNative(type: Exec, description: 'Clean JNI object files') {
+        def ndkDir = android.ndkDirectory
+        commandLine "$ndkDir/ndk-build",
+                '-C', file('jni').absolutePath, // relative path to jni source
+                'clean'
+    }
+
+    clean.dependsOn 'cleanNative'
+
+    tasks.withType(JavaCompile) {
+        compileTask -> compileTask.dependsOn buildNative
     }
 
     productFlavors {

@@ -112,7 +112,7 @@ LOCAL_CPPFLAGS := -Wall -std=c++11 -DANDROID -frtti -DHAVE_PTHREAD -finline-func
 LOCAL_C_INCLUDES += ./boringssl/include/
 LOCAL_ARM_MODE := arm
 LOCAL_MODULE := tgnet
-LOCAL_STATIC_LIBRARIES := crypto
+LOCAL_WHOLE_STATIC_LIBRARIES := crypto
 
 LOCAL_SRC_FILES := \
 ./tgnet/BuffersStorage.cpp \
@@ -139,7 +139,7 @@ include $(CLEAR_VARS)
 LOCAL_CFLAGS := -Wall -DANDROID -DHAVE_MALLOC_H -DHAVE_PTHREAD -DWEBP_USE_THREAD -finline-functions -ffast-math -ffunction-sections -fdata-sections -Os
 LOCAL_C_INCLUDES += ./libwebp/src
 LOCAL_ARM_MODE := arm
-LOCAL_STATIC_LIBRARIES := cpufeatures
+LOCAL_WHOLE_STATIC_LIBRARIES := cpufeatures
 LOCAL_MODULE := webp
 
 ifneq ($(findstring armeabi-v7a, $(TARGET_ARCH_ABI)),)
@@ -241,7 +241,7 @@ LOCAL_CFLAGS 	+= -Drestrict='' -D__EMX__ -DOPUS_BUILD -DFIXED_POINT -DUSE_ALLOCA
 LOCAL_CFLAGS 	+= -DANDROID_NDK -DDISABLE_IMPORTGL -fno-strict-aliasing -fprefetch-loop-arrays -DAVOID_TABLES -DANDROID_TILE_BASED_DECODE -DANDROID_ARMV6_IDCT -ffast-math -D__STDC_CONSTANT_MACROS
 LOCAL_CPPFLAGS 	:= -DBSD=1 -ffast-math -Os -funroll-loops -std=c++11
 LOCAL_LDLIBS 	:= -ljnigraphics -llog -lz -latomic
-LOCAL_STATIC_LIBRARIES := webp sqlite tgnet breakpad avformat avcodec avutil
+LOCAL_WHOLE_STATIC_LIBRARIES := webp sqlite tgnet breakpad avformat avcodec avutil
 
 LOCAL_SRC_FILES     := \
 ./opus/src/opus.c \
