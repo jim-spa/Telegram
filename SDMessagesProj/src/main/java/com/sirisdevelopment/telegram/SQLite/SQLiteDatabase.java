@@ -8,6 +8,8 @@
 
 package com.sirisdevelopment.telegram.SQLite;
 
+import android.util.Log;
+
 import com.sirisdevelopment.telegram.messenger.FileLog;
 import com.sirisdevelopment.telegram.messenger.ApplicationLoader;
 
@@ -22,7 +24,9 @@ public class SQLiteDatabase {
 	}
 
 	public SQLiteDatabase(String fileName) throws SQLiteException {
-		sqliteHandle = opendb(fileName, ApplicationLoader.getFilesDirFixed().getPath());
+		sqliteHandle = opendb(fileName, ApplicationLoader.getFilesDirFixed().getPath(), 1);
+		Log.d("SQLiteDatabase", fileName + ApplicationLoader.getFilesDirFixed().getPath() +
+				", sqlitehandle value:" + sqliteHandle);
 		isOpen = true;
 	}
 
@@ -93,7 +97,7 @@ public class SQLiteDatabase {
         commitTransaction(sqliteHandle);
     }
 
-	native int opendb(String fileName, String tempDir) throws SQLiteException;
+	native int opendb(String fileName, String tempDir, int vfsBool) throws SQLiteException;
 	native void closedb(int sqliteHandle) throws SQLiteException;
     native void beginTransaction(int sqliteHandle);
     native void commitTransaction(int sqliteHandle);

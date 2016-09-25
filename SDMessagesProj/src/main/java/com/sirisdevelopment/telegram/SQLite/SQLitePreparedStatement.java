@@ -8,26 +8,29 @@
 
 package com.sirisdevelopment.telegram.SQLite;
 
+import android.util.Log;
+
 import com.sirisdevelopment.telegram.messenger.FileLog;
 import com.sirisdevelopment.telegram.tgnet.NativeByteBuffer;
 
 import java.nio.ByteBuffer;
+import java.util.HashMap;
 
 public class SQLitePreparedStatement {
+    private boolean isFinalized = false;
+    private int sqliteStatementHandle;
+    private boolean finalizeAfterQuery = false;
 
-	private boolean isFinalized = false;
-	private int sqliteStatementHandle;
-	private boolean finalizeAfterQuery = false;
+    private static HashMap<SQLitePreparedStatement, String> hashMap;
 
-    //private static HashMap<SQLitePreparedStatement, String> hashMap;
+    public int getStatementHandle() {
+        return sqliteStatementHandle;
+    }
 
-	public int getStatementHandle() {
-		return sqliteStatementHandle;
-	}
-
-	public SQLitePreparedStatement(SQLiteDatabase db, String sql, boolean finalize) throws SQLiteException {
-		finalizeAfterQuery = finalize;
-		sqliteStatementHandle = prepare(db.getSQLiteHandle(), sql);
+    public SQLitePreparedStatement(SQLiteDatabase db, String sql, boolean finalize) throws SQLiteException {
+        finalizeAfterQuery = finalize;
+        Log.d("SQLitePreparedStatement", "sql: " + sql);
+        sqliteStatementHandle = prepare(db.getSQLiteHandle(), sql);
         /*if (BuildVars.DEBUG_VERSION) {
             if (hashMap == null) {
                 hashMap = new HashMap<>();
@@ -37,7 +40,7 @@ public class SQLitePreparedStatement {
                 FileLog.d("tmessages", "exist entry = " + entry.getValue());
             }
         }*/
-	}
+    }
 
 
     public SQLiteCursor query(Object[] args) throws SQLiteException {
@@ -77,37 +80,37 @@ public class SQLitePreparedStatement {
         return this;
     }
 
-	public void requery() throws SQLiteException {
-		checkFinalized();
-		reset(sqliteStatementHandle);
-	}
+    public void requery() throws SQLiteException {
+        checkFinalized();
+        reset(sqliteStatementHandle);
+    }
 
-	public void dispose() {
-		if (finalizeAfterQuery) {
-			finalizeQuery();
-		}
-	}
+    public void dispose() {
+        if (finalizeAfterQuery) {
+            finalizeQuery();
+        }
+    }
 
-	void checkFinalized() throws SQLiteException {
-		if (isFinalized) {
-			throw new SQLiteException("Prepared query finalized");
-		}
-	}
+    void checkFinalized() throws SQLiteException {
+        if (isFinalized) {
+            throw new SQLiteException("Prepared query finalized");
+        }
+    }
 
-	public void finalizeQuery() {
+    public void finalizeQuery() {
         if (isFinalized) {
             return;
         }
-		try {
+        try {
             /*if (BuildVars.DEBUG_VERSION) {
                 hashMap.remove(this);
             }*/
-			isFinalized = true;
-			finalize(sqliteStatementHandle);
-		} catch (SQLiteException e) {
+            isFinalized = true;
+            finalize(sqliteStatementHandle);
+        } catch (SQLiteException e) {
             FileLog.e("tmessages", e.getMessage(), e);
-		}
-	}
+        }
+    }
 
     public void bindInteger(int index, int value) throws SQLiteException {
         bindInt(sqliteStatementHandle, index, value);
@@ -137,14 +140,14 @@ public class SQLitePreparedStatement {
         bindNull(sqliteStatementHandle, index);
     }
 
-	native void bindByteBuffer(int statementHandle, int index, ByteBuffer value, int length) throws SQLiteException;
-	native void bindString(int statementHandle, int index, String value) throws SQLiteException;
-	native void bindInt(int statementHandle, int index, int value) throws SQLiteException;
+    native void bindByteBuffer(int statementHandle, int index, ByteBuffer value, int length) throws SQLiteException;
+    native void bindString(int statementHandle, int index, String value) throws SQLiteException;
+    native void bindInt(int statementHandle, int index, int value) throws SQLiteException;
     native void bindLong(int statementHandle, int index, long value) throws SQLiteException;
-	native void bindDouble(int statementHandle, int index, double value) throws SQLiteException;
-	native void bindNull(int statementHandle, int index) throws SQLiteException;
-	native void reset(int statementHandle) throws SQLiteException;
-	native int prepare(int sqliteHandle, String sql) throws SQLiteException;
-	native void finalize(int statementHandle) throws SQLiteException;
+    native void bindDouble(int statementHandle, int index, double value) throws SQLiteException;
+    native void bindNull(int statementHandle, int index) throws SQLiteException;
+    native void reset(int statementHandle) throws SQLiteException;
+    native int prepare(int sqliteHandle, String sql) throws SQLiteException;
+    native void finalize(int statementHandle) throws SQLiteException;
     native int step(int statementHandle) throws SQLiteException;
 }

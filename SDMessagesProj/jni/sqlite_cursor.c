@@ -63,15 +63,12 @@ int Java_com_sirisdevelopment_telegram_SQLite_SQLiteCursor_columnByteArrayLength
 	return sqlite3_column_bytes((sqlite3_stmt *)statementHandle, columnIndex);
 }
 
-int Java_com_sirisdevelopment_telegram_SQLite_SQLiteCursor_columnByteBufferValue(JNIEnv *env, jobject object, int statementHandle, int columnIndex, jobject buffer) {
-    if (!buffer) {
-        return 0;
-    }
+int Java_com_sirisdevelopment_telegram_SQLite_SQLiteCursor_columnByteBufferValue(JNIEnv *env, jobject object, int statementHandle, int columnIndex) {
 	sqlite3_stmt *handle = (sqlite3_stmt *)statementHandle;
 	void *buf = sqlite3_column_blob(handle, columnIndex);
 	int length = sqlite3_column_bytes(handle, columnIndex);
 	if (buf != 0 && length > 0) {
-        jbyte *byteBuff = (*env)->GetDirectBufferAddress(env, buffer);
+        jbyte *byteBuff = (*env)->GetDirectBufferAddress(env, buf);
         memcpy(byteBuff, buf, length);
         return length;
 	}

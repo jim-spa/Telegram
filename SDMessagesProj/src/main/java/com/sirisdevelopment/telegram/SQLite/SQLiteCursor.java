@@ -11,6 +11,8 @@ package com.sirisdevelopment.telegram.SQLite;
 import com.sirisdevelopment.telegram.messenger.FileLog;
 import com.sirisdevelopment.telegram.tgnet.NativeByteBuffer;
 
+import java.nio.ByteBuffer;
+
 public class SQLiteCursor {
 
 	public static final int FIELD_TYPE_INT = 1;
