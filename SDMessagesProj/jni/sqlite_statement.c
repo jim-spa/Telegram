@@ -1,10 +1,7 @@
 #include "sqlite.h"
 
-jfieldID queryArgsCountField;
-
 jint sqliteOnJNILoad(JavaVM *vm, void *reserved, JNIEnv *env) {
 	jclass class = (*env)->FindClass(env, "com/sirisdevelopment/telegram/SQLite/SQLitePreparedStatement");
-	queryArgsCountField = (*env)->GetFieldID(env, class, "queryArgsCount", "I");
 	return JNI_VERSION_1_6;
 }
 
@@ -32,9 +29,6 @@ int Java_com_sirisdevelopment_telegram_SQLite_SQLitePreparedStatement_prepare(JN
     int errcode = sqlite3_prepare_v2(handle, sqlStr, -1, &stmt_handle, 0);
     if (SQLITE_OK != errcode) {
     	throw_sqlite3_exception(env, handle, errcode);
-    } else {
-    	int argsCount = sqlite3_bind_parameter_count(stmt_handle);
-    	(*env)->SetIntField(env, object, queryArgsCountField, argsCount);
     }
 
     if (sqlStr != 0) {

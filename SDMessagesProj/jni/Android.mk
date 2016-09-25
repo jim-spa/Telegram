@@ -524,6 +524,10 @@ endif
 LOCAL_SRC_FILES     += \
 ./jni.c \
 ./audio.c \
+./sqlite_cursor.c \
+./sqlite_database.c \
+./sqlite_statement.c \
+./sqlite.c \
 ./utils.c \
 ./image.c \
 ./video.c \
