@@ -16,7 +16,39 @@
         }
       },
       "oauth_client": [],
-      "api_key": [],
+      "api_key": [{ "current_key": "AIzaSyAHerZ1-zaue_IFjUOZppOzmfBqNYIZNFM" }],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:760348033671:android:f6afd7b67eae3860",
+        "client_id": "android:com.sirisdevelopment.telegram",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.sirisdevelopment.telegram",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [],
+      "api_key": [{ "current_key": "AIzaSyAHerZ1-zaue_IFjUOZppOzmfBqNYIZNFM" }],
       "services": {
         "analytics_service": {
           "status": 1

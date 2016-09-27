@@ -132,7 +132,7 @@
         </activity>
 
         <receiver
-            android:name=".AutoMessageHeardReceiver"
+            android:name="com.sirisdevelopment.telegram.messenger.AutoMessageHeardReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.sirisdevelopment.telegram.messenger.ACTION_MESSAGE_HEARD"/>
@@ -140,26 +140,27 @@
         </receiver>
 
         <receiver
-            android:name=".AutoMessageReplyReceiver"
+            android:name="com.sirisdevelopment.telegram.messenger.AutoMessageReplyReceiver"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.sirisdevelopment.telegram.messenger.ACTION_MESSAGE_REPLY"/>
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".CallReceiver" >
+        <receiver android:name="com.sirisdevelopment.telegram.messenger.CallReceiver" >
             <intent-filter>
                 <action android:name="android.intent.action.PHONE_STATE" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".SmsListener">
+        <receiver android:name="com.sirisdevelopment.telegram.messenger.SmsListener">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".AuthenticatorService" android:exported="true">
+        <service android:name="com.sirisdevelopment.telegram.messenger.AuthenticatorService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator"/>
             </intent-filter>
@@ -167,7 +168,8 @@
                 android:resource="@xml/auth"/>
         </service>
 
-        <service android:name=".ContactsSyncAdapterService" android:exported="true">
+        <service android:name="com.sirisdevelopment.telegram.messenger.ContactsSyncAdapterService"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
@@ -186,13 +188,19 @@
             </intent-filter>
         </service>
 
-        <service android:name=".NotificationsService" android:enabled="true"/>
-        <service android:name=".NotificationRepeat" android:exported="false"/>
-        <service android:name=".ClearCacheService" android:exported="false"/>
-        <service android:name=".VideoEncodingService" android:enabled="true"/>
-        <service android:name=".MusicPlayerService" android:exported="true" android:enabled="true"/>
+        <service android:name="com.sirisdevelopment.telegram.messenger.NotificationsService"
+            android:enabled="true"/>
+        <service android:name="com.sirisdevelopment.telegram.messenger.NotificationRepeat"
+            android:exported="false"/>
+        <service android:name="com.sirisdevelopment.telegram.messenger.ClearCacheService"
+            android:exported="false"/>
+        <service android:name="com.sirisdevelopment.telegram.messenger.VideoEncodingService"
+            android:enabled="true"/>
+        <service android:name="com.sirisdevelopment.telegram.messenger.MusicPlayerService"
+            android:exported="true"
+            android:enabled="true"/>
 
-        <receiver android:name=".MusicPlayerReceiver" >
+        <receiver android:name="com.sirisdevelopment.telegram.messenger.MusicPlayerReceiver" >
             <intent-filter>
                 <action android:name="com.sirisdevelopment.telegram.android.musicplayer.close" />
                 <action android:name="com.sirisdevelopment.telegram.android.musicplayer.pause" />
@@ -204,16 +212,19 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".AppStartReceiver" android:enabled="true">
+        <receiver android:name="com.sirisdevelopment.telegram.messenger.AppStartReceiver"
+            android:enabled="true">
             <intent-filter>
                 <action android:name="com.sirisdevelopment.telegram.start" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".WearReplyReceiver" android:enabled="true"/>
+        <receiver android:name="com.sirisdevelopment.telegram.messenger.WearReplyReceiver"
+            android:enabled="true"/>
 
-        <receiver android:name=".ShareBroadcastReceiver" android:enabled="true"/>
+        <receiver android:name="com.sirisdevelopment.telegram.messenger.ShareBroadcastReceiver"
+            android:enabled="true"/>
 
         <uses-library android:name="com.sec.android.app.multiwindow" android:required="false" />
         <meta-data android:name="com.sec.android.support.multiwindow" android:value="true" />

@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 repositories {
     mavenCentral()
@@ -9,12 +9,13 @@ repositories {
 
 dependencies {
     compile(name: 'SDMM_SDK-release', ext: 'aar')
-    compile 'com.android.support:support-v4:24.0.0-alpha2'
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:support-v4:24.0.0'
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.google.android.gms:play-services-maps:8.4.0'
     compile 'net.hockeyapp.android:HockeySDK:3.6.+'
     compile 'com.googlecode.mp4parser:isoparser:1.0.+'
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(dir: 'libs', include: ['*.jar',  '*.so'])
 }
 
 android {
@@ -22,11 +23,14 @@ android {
     buildToolsVersion '23.0.3'
 
     useLibrary 'org.apache.http.legacy'
-    defaultConfig.applicationId = "com.sirisdevelopment.telegram.messenger"
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    lintOptions {
+        abortOnError false
     }
 
     signingConfigs {
@@ -38,7 +42,7 @@ android {
         }
 
         release {
-            storeFile file("config/release.keystore")
+            storeFile file("config/sdtelegram.keystore")
             storePassword RELEASE_STORE_PASSWORD
             keyAlias RELEASE_KEY_ALIAS
             keyPassword RELEASE_KEY_PASSWORD
@@ -50,7 +54,6 @@ android {
             debuggable true
             jniDebuggable true
             signingConfig signingConfigs.debug
-            applicationIdSuffix ".beta"
         }
 
         release {
@@ -71,7 +74,14 @@ android {
     defaultConfig.versionCode = 787
 
     sourceSets.main {
-        jniLibs.srcDir 'libs'
+        manifest.srcFile 'src/main/AndroidManifest.xml'
+        java.srcDirs         = ['src/main/java']
+        resources.srcDirs    = ['src/main/res']
+        aidl.srcDirs         = ['src/main/aidl']
+        renderscript.srcDirs = ['src/main/java']
+        res.srcDirs          = ['src/main/res']
+        assets.srcDirs       = ['src/main/assets']
+        jniLibs.srcDir 'jniLibs'
         jni.srcDirs = [] //disable automatic ndk-build call
     }
 
@@ -111,7 +121,7 @@ android {
         }
     }
 
-    applicationVariants.all { variant ->
+    libraryVariants.all { variant ->
         def abiVersion = variant.productFlavors.get(0).versionCode
         variant.mergedFlavor.versionCode = defaultConfig.versionCode * 10 + abiVersion;
     }

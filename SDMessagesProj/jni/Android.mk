@@ -226,8 +226,10 @@ endif
 LOCAL_MODULE := sqlite
 LOCAL_CFLAGS 	:= -w -std=c11 -Os -DNULL=0 -DSOCKLEN_T=socklen_t -DLOCALE_NOT_USED -D_LARGEFILE_SOURCE=1 -D_FILE_OFFSET_BITS=64
 LOCAL_CFLAGS 	+= -DANDROID_NDK -DDISABLE_IMPORTGL -fno-strict-aliasing -fprefetch-loop-arrays -DAVOID_TABLES -DANDROID_TILE_BASED_DECODE -DANDROID_ARMV6_IDCT -DHAVE_STRCHRNUL=0
+LOCAL_C_INCLUDES += ./sqlite
 
 LOCAL_SRC_FILES     := \
+./sqlite.c \
 ./sqlite/sqlite3.c
 
 include $(BUILD_STATIC_LIBRARY)
@@ -242,6 +244,7 @@ LOCAL_CFLAGS 	+= -DANDROID_NDK -DDISABLE_IMPORTGL -fno-strict-aliasing -fprefetc
 LOCAL_CPPFLAGS 	:= -DBSD=1 -ffast-math -Os -funroll-loops -std=c++11
 LOCAL_LDLIBS 	:= -ljnigraphics -llog -lz -latomic
 LOCAL_STATIC_LIBRARIES := webp sqlite tgnet breakpad avformat avcodec avutil
+LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
 
 LOCAL_SRC_FILES     := \
 ./opus/src/opus.c \
@@ -526,6 +529,7 @@ LOCAL_SRC_FILES     += \
 ./audio.c \
 ./utils.c \
 ./image.c \
+./sqlite.c \
 ./video.c \
 ./gifvideo.cpp \
 ./SqliteWrapper.cpp \

@@ -6,9 +6,10 @@
 #include <stdlib.h>
 #include <openssl/aes.h>
 #include <unistd.h>
-#include "utils.h"
-#include "sqlite.h"
-#include "image.h"
+#include <utils.h>
+#include <sqlite.h>
+#include <sqlite/sqlite3.h>
+#include <image.h>
 
 int registerNativeTgNetFunctions(JavaVM *vm, JNIEnv *env);
 int gifvideoOnJNILoad(JavaVM *vm, JNIEnv *env);
